@@ -1,11 +1,11 @@
 class Users::SessionsController < ApplicationController
-  before_action :find_user, only: %i[create destroy]
+  before_action :find_user, only: :create
 
   def create
     if user&.authenticate(user_params[:password])
       response.set_header("Authorization", "Bearer #{jwt_token}")
 
-      render json: UserSerializer.new(@user).serialized_json
+      render json: UserSerializer.new(@user).serialized_json, status: :created
     else
       respond_with_error(:unauthorized, message: I18n.t("errors.invalid_credentials"))
     end
