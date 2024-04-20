@@ -3,7 +3,9 @@ class Users::SessionsController < ApplicationController
 
   def create
     if user&.authenticate(user_params[:password])
-      render json: UserSerializer.new(user).serialized_json
+      response.set_header("Authorization", "Bearer #{jwt_token}")
+
+      render json: UserSerializer.new(@user).serialized_json
     else
       respond_with_error(:unauthorized, message: I18n.t("errors.invalid_credentials"))
     end
@@ -16,6 +18,14 @@ class Users::SessionsController < ApplicationController
   private
 
   attr_reader :user
+
+  def jwt_token
+    JwtService.encode(payload: payload)
+  end
+
+  def payload
+    AccessToken.new(user).payload
+  end
 
   def find_user
     @user ||= User.find_by(email: user_params[:email])
