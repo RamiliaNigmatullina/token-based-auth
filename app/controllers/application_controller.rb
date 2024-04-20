@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
+  include ActionController::Cookies
+
   rescue_from ActiveRecord::RecordNotFound, with: :respond_with_record_not_found
 
   private

@@ -6,7 +6,9 @@ module Users
 
     def create
       if user&.authenticate(user_params[:password])
-        response.set_header("Authorization", "Bearer #{jwt_token}")
+        response.set_header("Authorization", "Bearer #{access_token}")
+
+        cookies.encrypted[RefreshToken::COOKIE_NAME] = refresh_token_cookie
 
         render json: UserSerializer.new(@user).serialized_json, status: :created
       else
@@ -22,16 +24,16 @@ module Users
 
     attr_reader :user
 
-    def jwt_token
-      JwtService.encode(payload:)
+    def access_token
+      Users::AccessTokenService.new(user:).access_token
     end
 
-    def payload
-      AccessToken.new(user).payload
+    def refresh_token_cookie
+      Users::RefreshTokenService.new(user:).refresh_token_cookie
     end
 
     def find_user
-      @find_user ||= User.find_by(email: user_params[:email])
+      @user ||= User.find_by(email: user_params[:email])
     end
 
     def user_params
