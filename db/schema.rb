@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 20_240_420_164_347) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_20_164347) do
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.string "first_name", null: false

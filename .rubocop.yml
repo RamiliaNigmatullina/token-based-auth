@@ -4,9 +4,10 @@ AllCops:
 
 require:
   - rubocop-factory_bot
+  - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
-  - rubocop-performance
+  - rubocop-rspec_rails
 
 inherit_from: .rubocop_todo.yml
 
@@ -15,6 +16,9 @@ Style/StringLiterals:
 
 Style/Documentation:
   Enabled: false
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
 
 Metrics/BlockLength:
   Max: 100
