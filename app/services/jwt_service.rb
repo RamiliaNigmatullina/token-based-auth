@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class JwtService
   HMAC_SECRET = Rails.application.credentials.secret_key_base
   ALGORITHM = "HS256"
@@ -9,8 +11,8 @@ class JwtService
   def self.decode(token:)
     body = JWT.decode(token, HMAC_SECRET, true, { algorithm: ALGORITHM }).first
 
-    HashWithIndifferentAccess.new(body)
-  rescue JWT::DecodeError => e
+    ActiveSupport::HashWithIndifferentAccess.new(body)
+  rescue JWT::DecodeError
     nil
   end
 end

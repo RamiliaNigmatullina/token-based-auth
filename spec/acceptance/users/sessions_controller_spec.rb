@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 resource "Users/Sessions" do
   let!(:user) { create(:user, :john_smith) }
 

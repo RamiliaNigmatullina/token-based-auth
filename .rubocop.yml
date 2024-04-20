@@ -1,0 +1,25 @@
+AllCops:
+  TargetRubyVersion: 3.3
+  NewCops: enable
+
+require:
+  - rubocop-factory_bot
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-performance
+
+inherit_from: .rubocop_todo.yml
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Max: 100
+  Exclude:
+    - spec/**/*
+
+RSpec/MultipleExpectations:
+  Max: 3
