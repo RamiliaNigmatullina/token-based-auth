@@ -3,12 +3,10 @@
 RSpec.describe AccessToken do
   subject(:access_token) { described_class.new(user) }
 
+  include_context "when time is frozen"
+
   let(:user) { create(:user) }
   let(:token_ttl) { Rails.application.credentials.access_token_ttl_sec }
-
-  before do
-    travel_to Time.zone.local(2024, 4, 20, 12, 0, 0)
-  end
 
   describe "#payload" do
     subject(:payload) { access_token.payload }

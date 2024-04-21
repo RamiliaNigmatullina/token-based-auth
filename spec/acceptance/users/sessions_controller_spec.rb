@@ -5,6 +5,8 @@ resource "Users/Sessions" do
 
   header "Content-Type", "application/json"
 
+  include_context "when time is frozen"
+
   post "/users/sessions" do
     with_options scope: :user, required: true do
       parameter :email, "User email", required: true
@@ -26,6 +28,9 @@ resource "Users/Sessions" do
         }
       }.deep_stringify_keys
     end
+    let(:refresh_token_cookie_regexp) do
+      %r{_token_based_auth_refresh_token=[^;]+; path=/; expires=Sat, 20 Jul 2024 12:00:00 GMT; httponly; SameSite=Lax}
+    end
 
     example "Sign in" do
       do_request
@@ -33,10 +38,10 @@ resource "Users/Sessions" do
       expect(status).to eq(201)
       expect(json_response_body).to eq(expected_data)
       expect(response_headers["Authorization"]).to start_with("Bearer ")
+      expect(response_headers["Set-Cookie"]).to match(refresh_token_cookie_regexp)
     end
 
-    context "when password is invalid" do
-      let(:password) { "wrong_password" }
+    context "with invalid credentials" do
       let(:expected_error) do
         {
           error: {
@@ -45,11 +50,26 @@ resource "Users/Sessions" do
         }.deep_stringify_keys
       end
 
-      example "Sign in with invalid credentials" do
-        do_request
+      context "when password is invalid" do
+        let(:password) { "wrong_password" }
 
-        expect(status).to eq(401)
-        expect(json_response_body).to eq(expected_error)
+        example "Sign in with invalid password" do
+          do_request
+
+          expect(status).to eq(401)
+          expect(json_response_body).to eq(expected_error)
+        end
+      end
+
+      context "when email is invalid" do
+        let(:email) { "wrong.email@example.com" }
+
+        example "Sign in with invalid email" do
+          do_request
+
+          expect(status).to eq(401)
+          expect(json_response_body).to eq(expected_error)
+        end
       end
     end
   end

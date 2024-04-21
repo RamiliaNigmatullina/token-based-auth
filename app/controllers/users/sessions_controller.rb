@@ -4,9 +4,8 @@ module Users
   class SessionsController < ApplicationController
     def create
       if user&.authenticate(user_params[:password])
-        response.set_header("Authorization", "Bearer #{access_token}")
-        
-        cookies.encrypted[RefreshToken::COOKIE_NAME] = refresh_token_cookie
+        set_access_token
+        set_refresh_token
 
         render json: UserSerializer.new(user).serialized_json, status: :created
       else
@@ -20,12 +19,16 @@ module Users
 
     private
 
-    def access_token
-      Users::AccessTokenService.new(user:).access_token
+    def set_access_token
+      response.set_header("Authorization", "Bearer #{access_token}")
     end
 
-    def refresh_token_cookie
-      Users::RefreshTokenService.new(user:).refresh_token_cookie
+    def set_refresh_token
+      cookies.encrypted[RefreshToken::COOKIE_NAME] = RefreshTokenService.new(user:).refresh_token_cookie
+    end
+
+    def access_token
+      AccessTokenService.new(user:).access_token
     end
 
     def user

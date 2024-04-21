@@ -26,4 +26,7 @@ Metrics/BlockLength:
     - spec/**/*
 
 RSpec/MultipleExpectations:
-  Max: 3
+  Max: 4
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
