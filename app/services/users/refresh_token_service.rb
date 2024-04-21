@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Users
   class RefreshTokenService
     attr_reader :user
@@ -19,11 +21,15 @@ module Users
     private
 
     def refresh_token
-      @refresh_token ||= RefreshToken.create(
-        user: user,
+      @refresh_token ||= RefreshToken.create!(
+        user:,
         expires_at: RefreshToken::EXPIRATION.from_now,
         value: SecureRandom.uuid
       )
+    rescue ActiveRecord::RecordInvalid => e
+      Rails.logger.error("Refresh token cannot be created: #{e.message}")
+
+      raise RefreshTokenCreationError
     end
   end
 end
