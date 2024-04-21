@@ -3,7 +3,8 @@
 class User < ApplicationRecord
   before_save :encrypt_password
 
-  validates :email, :first_name, :last_name, presence: true
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
+  validates :first_name, :last_name, presence: true
   validates :password, presence: true, confirmation: true
   validates :password_confirmation, presence: true, if: :password_required?
 

@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_20_221704) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_21_145519) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "companies", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "subdomain", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subdomain"], name: "index_companies_on_subdomain", unique: true
+  end
 
   create_table "refresh_tokens", force: :cascade do |t|
     t.bigint "user_id", null: false

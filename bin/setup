@@ -2,6 +2,16 @@
 
 cd "$(dirname $0)"/..
 
+echo "== Installing dependencies =="
 bundle config set --local path '.bundle'
 bundle check > /dev/null 2>&1 ||
   bundle install
+
+
+# Setup database and add any development seed data
+echo "== Preparing database =="
+bin/rails db:prepare
+
+# Clean log files and tmp directory
+echo "== Removing old logs and tempfiles =="
+bin/rails log:clear tmp:clear
