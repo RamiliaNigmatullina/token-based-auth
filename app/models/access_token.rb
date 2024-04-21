@@ -20,11 +20,11 @@ class AccessToken
   private
 
   def expiration_time
-    token_ttl.seconds.from_now.to_i
+    issued_at + token_ttl
   end
 
   def issued_at
-    Time.current.to_i
+    @issued_at ||= Time.current.to_i
   end
 
   def token_ttl

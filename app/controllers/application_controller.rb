@@ -18,6 +18,12 @@ class ApplicationController < ActionController::API
     respond_with_error(:unprocessable_entity, message: exception.message)
   end
 
+  def respond_with_unauthorized(message = nil)
+    message ||= I18n.t("errors.unauthorized")
+
+    respond_with_error(:unauthorized, message: message)
+  end
+
   def respond_with_error(code, message: nil)
     render json: { error: { message: } }, status: code
   end

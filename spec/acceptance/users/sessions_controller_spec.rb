@@ -3,8 +3,7 @@
 resource "Users/Sessions" do
   let!(:user) { create(:user, :john_smith) }
 
-  header "Content-Type", "application/json"
-
+  include_context "with api headers"
   include_context "when time is frozen"
 
   post "/users/sessions" do
@@ -75,6 +74,10 @@ resource "Users/Sessions" do
   end
 
   delete "/users/sessions" do
+    include_context "with authorization header"
+
+    let(:current_user) { user }
+
     example "Sign out" do
       do_request
 

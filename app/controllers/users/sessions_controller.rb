@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module Users
-  class SessionsController < ApplicationController
+  class SessionsController < BaseController
+    skip_before_action :authenticate_user!, only: :create
+
     def create
       if user&.authenticate(user_params[:password])
         set_access_token

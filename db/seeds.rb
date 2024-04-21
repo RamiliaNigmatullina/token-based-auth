@@ -10,4 +10,5 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+FactoryBot.create(:user, email: "john.smith@example.com", first_name: "John", last_name: "Smith")
 FactoryBot.create_list(:company, 10)

@@ -12,7 +12,5 @@ class JwtService
     body = JWT.decode(token, HMAC_SECRET, true, { algorithm: ALGORITHM }).first
 
     ActiveSupport::HashWithIndifferentAccess.new(body)
-  rescue JWT::DecodeError
-    nil
   end
 end

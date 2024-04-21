@@ -31,3 +31,4 @@ en:
   errors:
     not_found: "%{entity} could not be found"
     invalid_credentials: "Invalid credentials"
+    unauthorized: "Unauthorized"

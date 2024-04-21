@@ -21,6 +21,16 @@ RSpec.describe Company do
 
         expect(company.subdomain).to eq("example-company")
       end
+
+      context "when subdomain is nil" do
+        let(:subdomain) { nil }
+
+        it "sets the subdomain from the name" do
+          company.valid?
+
+          expect(company.subdomain).to eq("example-company")
+        end
+      end
     end
   end
 end

@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   namespace :users do
+    resource :me, only: %i[show]
     resource :sessions, only: %i[create destroy]
+    resources :companies, only: %i[index]
   end
 end
