@@ -33,10 +33,7 @@ resource "Users/Me" do
     end
 
     context "with invalid token" do
-      let(:authorization) do
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImV4cCI6MTcxMzcxNzkzNiwiaWF0IjoxNzEzNzE3NjM2LCJpc3MiOiJ" \
-          "0b2tlbi1iYXNlZC1hdXRoIiwiYXVkIjoidG9rZW4tYmFzZWQtYXV0aCJ9.X6c2XK-sVccCMhkVKmROloEuyduxAA5pO1_Ylu27z-c"
-      end
+      include_context "with invalid authorization header"
 
       example "Get current user info with invalid token" do
         do_request

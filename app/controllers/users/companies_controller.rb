@@ -2,6 +2,14 @@
 
 module Users
   class CompaniesController < BaseController
-    def index; end
+    def index
+      render json: CompanySerializer.new(companies).serializable_hash.to_json
+    end
+
+    private
+
+    def companies
+      @companies ||= Company.all
+    end
   end
 end
