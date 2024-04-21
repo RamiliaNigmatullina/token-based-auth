@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Users
   class BaseController < ApplicationController
     before_action :authenticate_user!
@@ -8,7 +10,7 @@ module Users
 
     def authenticate_user!
       payload = JwtService.decode(token:)
-      
+
       @current_user = User.find(payload["sub"])
     rescue ActiveRecord::RecordNotFound, JWT::DecodeError
       respond_with_unauthorized

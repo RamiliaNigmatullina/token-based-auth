@@ -9,6 +9,6 @@ class Company < ApplicationRecord
   private
 
   def set_subdomain
-    self.subdomain = name.downcase.gsub(/\s+/, "-").gsub(/[^\w-]/, "") unless subdomain.present?
+    self.subdomain = name.downcase.gsub(/\s+/, "-").gsub(/[^\w-]/, "") if subdomain.blank?
   end
 end

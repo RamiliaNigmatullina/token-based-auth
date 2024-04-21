@@ -13,7 +13,7 @@ RSpec.describe Company do
       expect(company.subdomain).to eq("custom-subdomain")
     end
 
-    context "when subdomain is not provided" do
+    context "when subdomain is empty" do
       let(:subdomain) { "" }
 
       it "sets the subdomain from the name" do
@@ -21,15 +21,15 @@ RSpec.describe Company do
 
         expect(company.subdomain).to eq("example-company")
       end
+    end
 
-      context "when subdomain is nil" do
-        let(:subdomain) { nil }
+    context "when subdomain is nil" do
+      let(:subdomain) { nil }
 
-        it "sets the subdomain from the name" do
-          company.valid?
+      it "sets the subdomain from the name" do
+        company.valid?
 
-          expect(company.subdomain).to eq("example-company")
-        end
+        expect(company.subdomain).to eq("example-company")
       end
     end
   end

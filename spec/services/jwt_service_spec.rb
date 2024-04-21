@@ -19,7 +19,7 @@ RSpec.describe JwtService do
     context "when token is invalid" do
       let(:token) { "invalid_token" }
 
-      it { expect { decode }.to raise_error(JWT::DecodeError)}
+      it { expect { decode }.to raise_error(JWT::DecodeError) }
     end
   end
 end

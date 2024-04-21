@@ -40,7 +40,7 @@ resource "Users/Me" do
 
       example "Get current user info with invalid token" do
         do_request
-  
+
         expect(status).to eq(401)
         expect(json_response_body).to eq(expected_error)
       end
@@ -53,7 +53,7 @@ resource "Users/Me" do
 
       example "Get current user info with expired token" do
         do_request
-  
+
         expect(status).to eq(401)
         expect(json_response_body).to eq(expected_error)
       end

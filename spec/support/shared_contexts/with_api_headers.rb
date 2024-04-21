@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_context "with api headers" do
   header "Accept", "application/json"
   header "Content-Type", "application/json"
